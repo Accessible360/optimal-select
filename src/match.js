@@ -7,12 +7,17 @@
 import { escapeValue } from './utilities'
 
 const defaultIgnore = {
-  attribute (attributeName) {
-    return [
+  attribute (attributeName, attributeValue) {
+    const ignoreNames = [
       'style',
       'data-reactid',
       'data-react-checksum'
-    ].indexOf(attributeName) > -1
+    ]
+    if (ignoreNames.indexOf(attributeName) > -1) {
+      return true;
+    }
+    const invalidCharsRe = /[^-_a-zA-Z0-9]/
+    return invalidCharsRe.test(attributeName) || invalidCharsRe.test(attributeValue)
   }
 }
 
